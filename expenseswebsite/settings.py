@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-# import environ
+import environ
 import django_heroku
 import dj_database_url
 from decouple import config
@@ -81,8 +81,8 @@ WSGI_APPLICATION = 'expenseswebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# env = environ.Env()
-# env.read_env()
+env = environ.Env()
+env.read_env()
 
 DATABASES = {
     'default': {
