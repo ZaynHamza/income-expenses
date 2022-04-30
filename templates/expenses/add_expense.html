@@ -2,5 +2,10 @@
 
 
 {% block content %}
-<h1>Add Expense</h1>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'expenses %}">Expenses</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add Expenses</li>
+  </ol>
+</nav>
 {% endblock %}
