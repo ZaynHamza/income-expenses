@@ -17,17 +17,17 @@
       <a href="{% url 'add-income' %}" class="btn btn-primary">Add Income</a>
     </div>
   </div>
-  <div class="container">
-    {% include 'partials/_messages.html' %}
-    {% if expenses.count %}
-    <div class="row">
-      <div class="col-md-8"></div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <input type="text" id="searchField" class="form-control" placeholder="Search">
-        </div>
-      </div>
-    </div>
+<!--  <div class="container">-->
+<!--    {% include 'partials/_messages.html' %}-->
+<!--    {% if expenses.count %}-->
+<!--    <div class="row">-->
+<!--      <div class="col-md-8"></div>-->
+<!--      <div class="col-md-4">-->
+<!--        <div class="form-group">-->
+<!--          <input type="text" id="searchField" class="form-control" placeholder="Search">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 <!--    <div class="app-table">-->
 <!--      <table class="table table-stripped table-hover">-->
 <!--        <thead>-->
@@ -86,7 +86,7 @@
 <!--      </ul>-->
 <!--      {% endif %}-->
 <!--    </div>-->
-  </div>
+<!--  </div>-->
 </div>
 
 <script src="{% static 'js/searchIncome.js' %}"></script>
