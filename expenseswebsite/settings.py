@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'userincome.apps.UserincomeConfig',
     'userpreferences.apps.UserpreferencesConfig',
     'authentication.apps.AuthenticationConfig',
     'expenses.apps.ExpensesConfig',
