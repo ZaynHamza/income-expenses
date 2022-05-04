@@ -40,7 +40,7 @@
           </div>
           <div class="form-group">
             <label>Date of Expense</label>
-            <input type="date" class="form-control form-control-sm" name="expense_date">
+            <input type="date" class="form-control form-control-sm" value="{{ values.date |date:'Y-m-d' }}" name="expense_date">
           </div>
           <input type="submit" value="Save" class="btn btn-primary btn-primary-sm">
         </form>
