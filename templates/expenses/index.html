@@ -32,7 +32,7 @@
       <table class="table table-stripped table-hover">
         <thead>
           <tr>
-            <th>Amount ({{ currency }})</th>
+            <th>Amount {% if currency %}({{ currency }}){% endif %}</th>
             <th>Category</th>
             <th>Description</th>
             <th>Date</th>
