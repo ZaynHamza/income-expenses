@@ -8,6 +8,17 @@ from .models import UserIncome, Source
 from userpreferences.models import UserPreferences
 
 
+def search_income(request):
+    if request.method == 'POST':
+        search_str = json.loads(request.body).get('searchText')
+        income = UserIncome.objects.filter(amount__istartswith=search_str, owner=request.user) | UserIncome.objects.filter(
+            date__istartswith=search_str, owner=request.user) | UserIncome.objects.filter(
+            description__icontains=search_str, owner=request.user) | UserIncome.objects.filter(
+            source__icontains=search_str, owner=request.user)
+        data = income.values()
+        return JsonResponse(list(data), safe=False)
+
+
 @login_required(login_url='authentication/login')
 def index(request):
     sources = Source.objects.all()
@@ -47,4 +58,41 @@ def add_income(request):
         UserIncome.objects.create(owner=request.user, amount=amount, description=description, date=date, source=source)
         messages.success(request, 'Record saved successfully')
         return redirect('income')
+
+
+def income_edit(request, id):
+    income = UserIncome.objects.get(pk=id)
+    sources = Source.objects.all()
+    context = {'income': income, 'values': income, 'sources': sources}
+    if request.method == "GET":
+        return render(request, 'income/edit-income.html', context=context)
+    if request.method == "POST":
+        amount = request.POST['amount']
+        description = request.POST['description']
+        source = request.POST['source']
+        date = request.POST['income_date']
+
+        if not amount:
+            messages.error(request, 'Amount is required')
+            return render(request, 'income/edit-income.html', context=context)
+
+        if not description:
+            messages.error(request, 'Description is required')
+            return render(request, 'income/edit-income.html', context=context)
+
+        income.owner = request.user
+        income.amount = amount
+        income.date = date
+        income.source = source
+        income.description = description
+        income.save()
+        messages.success(request, 'Record updated successfully')
+        return redirect('incomes')
+
+
+def delete_income(request, id):
+    income = UserIncome.objects.get(pk=id)
+    income.delete()
+    messages.success(request, "Record removed")
+    return redirect('income')
 
