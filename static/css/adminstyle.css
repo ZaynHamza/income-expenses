@@ -1,0 +1,28 @@
+#header {
+    background: #003333;
+    color: #ffffff;
+}
+
+#branding h1 {
+    color: #ffffff;
+}
+
+div.breadcrumbs {
+    background: #004444;
+    color: #ffffff;
+}
+
+input[type=button], .submit-row input {
+    background: #004444;
+    color: #ffffff;
+    width: 100%;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background: #003333;
+}
+
+a.section:link, a.section:visited {
+    color: #ffffff;
+}
+
