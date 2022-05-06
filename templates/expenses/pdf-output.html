@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
+    <title>PDF Output</title>
+    <style>
+      @page {
+        size: "A4";
+        margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+
+        @top-center {
+          content: "ZAYNEXPENSES";
+        }
+
+        @bottom-right {
+          content: "Page " counter(page) " of " counter(pages);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <img src="https://thumbs.dreamstime.com/b/money-cash-logo-vector-green-91037524.jpg" style="width: 100px; text-align: center;"/>
+    <h2>Expense List</h2>
+    <table class="table">
+      <thead class="thead">
+        <tr>
+          <th>No.</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for expense in expenses %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ expense.amount }}</td>
+          <td>{{ expense.category }}</td>
+          <td>{{ expense.description }}</td>
+          <td>{{ expense.date }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td>Total</td>
+          <td>{{ total }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
