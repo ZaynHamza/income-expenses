@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import UserIncome, Source
 from userpreferences.models import UserPreferences
+import datetime
+import csv
 
 
 def search_income(request):
@@ -23,7 +25,7 @@ def search_income(request):
 def index(request):
     sources = Source.objects.all()
     income = UserIncome.objects.filter(owner=request.user)
-    paginator = Paginator(income, 2)
+    paginator = Paginator(income, 10)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     currency = UserPreferences.objects.get(user=request.user).currency
@@ -87,7 +89,7 @@ def income_edit(request, id):
         income.description = description
         income.save()
         messages.success(request, 'Record updated successfully')
-        return redirect('incomes')
+        return redirect('income')
 
 
 def delete_income(request, id):
@@ -95,4 +97,35 @@ def delete_income(request, id):
     income.delete()
     messages.success(request, "Record removed")
     return redirect('income')
+
+
+def income_source_summary(request):
+    todays_date = datetime.date.today()
+    six_months_ago = todays_date-datetime.timedelta(days=30*6)
+    income = UserIncome.objects.filter(owner=request.user,
+                                        date__gte=six_months_ago, date__lte=todays_date)
+    finalrep = {}
+
+    def get_source(income):
+        return income.source
+    source_list = list(set(map(get_source, income)))
+
+    def get_income_source_amount(source):
+        amount = 0
+        filtered_by_source = income.filter(source=source)
+
+        for item in filtered_by_source:
+            amount += item.amount
+        return amount
+
+    for x in income:
+        for y in source_list:
+            finalrep[y] = get_income_source_amount(y)
+
+    return JsonResponse({'income_source_data': finalrep}, safe=False)
+
+
+def stats_view(request):
+    return render(request, 'income/stats.html')
+
 
